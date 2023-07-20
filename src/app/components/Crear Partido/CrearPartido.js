@@ -22,8 +22,11 @@ const database = getDatabase(app);
 function CrearPartido() {
 
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+
     const writeToDatabase = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         const timestamp = new Date().getTime();
         const id = uid(5).toUpperCase();
         const user_id = uid(8);
@@ -60,9 +63,11 @@ function CrearPartido() {
                 router.push(partido.url);
             }).catch((error) => {
                 console.error('Error al obtener los datos del partido: ', error);
+                setIsLoading(false);
             });
         }).catch((error) => {
             console.error('Error al escribir los datos: ', error.message);
+            setIsLoading(false);
         });
         return false;
     };
@@ -90,9 +95,9 @@ function CrearPartido() {
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={writeToDatabase}>
-                        <input className='form-control-lg my-2 w-100' type='text' id='username' placeholder='Escribir aquí' name='username' required />
+                        <input className='form-control-lg my-2 w-100' type='text' id='username' placeholder='Escribir aquí' name='username' required maxLength={15}/>
                         <div className='mt-3 mb-2 text-center'>
-                            <button type='submit' className='btn btn-warning border border-3 border-dark btn-lg bold px-4'>Crear Partido <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} /> </button>
+                            <button type='submit' disabled={isLoading} className='btn btn-warning border border-3 border-dark btn-lg bold px-4'>Crear Partido <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} /> </button>
                         </div>
                     </form>
                 </Modal.Body>

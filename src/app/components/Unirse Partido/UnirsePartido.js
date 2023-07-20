@@ -24,9 +24,12 @@ y se verifica si este id existe, si es asi se lo envia al PartidoComp
 */
 
 function UnirsePartido() {
-
+    
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+
     const unirsePartido = (event) => {
+        setIsLoading(true);
         event.preventDefault();
         const id = event.target[0].value;
 
@@ -38,15 +41,19 @@ function UnirsePartido() {
             }
             else {
                 console.log('No existe el partido, ID incorrecta');
+                setIsLoading(false);
             }
         }).catch((error) => {
             console.log('Error al obtener los datos del partido: ', error);
+            setIsLoading(false);
         });
     };
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+
 
     return (
         <div className="UnirsePartido">
@@ -68,7 +75,7 @@ function UnirsePartido() {
                     <form onSubmit={unirsePartido}>
                         <input className='form-control-lg my-2 w-100' type='text' id='username' placeholder='Escribir aquí' name='username' required />
                         <div className='mt-3 mb-2 text-center'>
-                            <button type='submit' className='btn btn-secondary border border-3 border-dark btn-lg bold px-4'>Unirse <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} /> </button>
+                            <button type='submit' disabled={isLoading} className='btn btn-secondary border border-3 border-dark btn-lg bold px-4'>Unirse <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} /> </button>
                         </div>
                     </form>
                 </Modal.Body>
