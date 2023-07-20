@@ -51,7 +51,7 @@ header{
 
 /* Establecer la imagen de fondo para el elemento body */
 .background{
-	background-image: url(/public/stadium.jpg);
+	background-image: url(/stadium.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
@@ -63,7 +63,7 @@ header{
 
 /* Establecer la imagen de fondo para el elemento body */
 .partido-bck{
-	background-image: url(/public/stadium.jpg);
+	background-image: url(/stadium.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
