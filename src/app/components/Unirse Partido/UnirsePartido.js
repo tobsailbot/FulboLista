@@ -16,10 +16,11 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 
-///// CAMBIOS /////
-// En este componente UnirsePArtido, solo se le pide el id del partido y se verifica si este id existe, si es asi se lo envia al PartidoComp  
-
-
+/*
+///// CAMBIOS 
+En este componente UnirsePArtido, solo se le pide el id del partido
+y se verifica si este id existe, si es asi se lo envia al PartidoComp  
+*/
 
 function UnirsePartido() {
 

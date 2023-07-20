@@ -1,12 +1,12 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyDEF_4GI_pTIH8u6fFCbdB1vrcYXDdl9bs",
-    authDomain: "peloturno-e8bc6.firebaseapp.com",
-    databaseURL: "https://peloturno-e8bc6-default-rtdb.firebaseio.com",
-    projectId: "peloturno-e8bc6",
-    storageBucket: "peloturno-e8bc6.appspot.com",
-    messagingSenderId: "730962796057",
-    appId: "1:730962796057:web:7b0e73a9f4e5d1cfc1d488",
-    measurementId: "G-GGGEM7R8J6"
-  };
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.DATABASE_URL,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID,
+};
 
   export default firebaseConfig

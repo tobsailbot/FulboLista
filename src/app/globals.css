@@ -1,3 +1,10 @@
+body{
+	background-image: url(/stadium.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	justify-content: center;
+}
 
 h1 {
 	color: white;
@@ -47,27 +54,6 @@ header{
 	position: absolute;
 	width: 100%;
 	background-color: rgba(40, 135, 0, 0.873);
-}
-
-/* Establecer la imagen de fondo para el elemento body */
-.background{
-	background-image: url(/stadium.jpg);
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-attachment: fixed;
-	display: flex;
-	justify-content: center;
-	min-height: 700px;
-	height: 100vh;
-}
-
-/* Establecer la imagen de fondo para el elemento body */
-.partido-bck{
-	background-image: url(/stadium.jpg);
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-attachment: fixed;
-	display: flow-root;
 }
 
 

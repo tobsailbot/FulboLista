@@ -234,194 +234,189 @@ function PartidoComponent(props) {
       return (
 
         <div>
+          <div className='sub-container mt-4 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
+            style={{ borderRadius: "20px 20px 0px 0px" }}>
+            {
+              //<h1 className='p-2 m-0'>⚽ PeloTurno</h1>
+            }
+            <span>
+              <b>ID:</b> &nbsp;
+              <span className='text-light text-decoration-underline'>{data.id}</span> &nbsp;
+              <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning fs-6 btn-sm'>Copiar</button>
+            </span>
 
-          <div className='partido-bck'>
+          </div>
 
-            <div className='sub-container mt-4 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
-              style={{ borderRadius: "20px 20px 0px 0px" }}>
-              {
-                //<h1 className='p-2 m-0'>⚽ PeloTurno</h1>
+          <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
+
+
+            <form>
+              <div className="row align-items-center mt-2">
+                <label className="col-4 fw-bold form-labels" htmlFor="fecha">Fecha:</label>
+                <div className="col-6">
+                  <input type="date" value={data.fecha} id="fecha"
+                    className="form-control fs-5 p-1" autoComplete='off' required
+                    onChange={(e) => setFormData({ ...formData, fecha: e.target.value })} />
+                </div>
+              </div>
+              <div className="row align-items-center mt-2">
+                <label className="col-4 fw-bold form-labels" htmlFor='hora'>Hora:</label>
+                <div className="col-6">
+                  <input type="time" value={data.hora} id="hora" className="form-control fs-5 p-1" autoComplete="off" required
+                    onChange={(e) => setFormData({ ...formData, hora: e.target.value })} />
+                </div>
+              </div>
+              <div className="row align-items-center mt-2">
+                <label className="col-4 fw-bold form-labels" htmlFor='lugar'>Lugar:</label>
+                <div className="col-6">
+                  <input type="text" value={data.lugar} id='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required
+                    onChange={(e) => setFormData({ ...formData, lugar: e.target.value })} />
+                </div>
+              </div>
+              <div className="row align-items-center mt-2">
+                <label className="col-4 fw-bold form-labels" htmlFor="precio" >Precio:</label>
+                <div className="col-6">
+                  <input type="number" value={data.precio} id='precio' name='precio' placeholder='$' className="form-control fs-5 p-1" autoComplete="off" required
+                    onChange={(e) => setFormData({ ...formData, precio: Number(e.target.value) })} />
+                </div>
+              </div>
+              <div className="row align-items-center mt-2">
+                <label className="col-4 fw-bold form-labels" htmlFor='alquilado' >Alquilado:</label>
+                <div className="col-6 ">
+                  <input type="checkbox" className="form-check-input fs-6 ms-0 ps-0 border border-dark " style={{ cursor: 'pointer' }} checked={data.alquilado} id="alquilado" autoComplete="off" required
+                    onChange={(e) => setFormData({ ...formData, alquilado: e.target.checked })} />
+                </div>
+              </div>
+            </form>
+
+          </div>
+
+
+          <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+            <div className='text-center justify-content-center align-items-center fw-bold'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faPeopleGroup} /> ({numUsuarios}) </div>
+            <div className=''>
+
+              {data.usuarios && Object.values(data.usuarios)
+                .filter(usuario => usuario.equipo === 0) // filtrar por equipo 1
+                .sort((a, b) => a.order - b.order) // ordenar por timestamp
+                .map((usuario) => (
+                  <div className='row me-2' key={usuario.user_id}>
+
+                    <div className='col-7 pb-1' key={usuario.user_id} style={{ color: usuario.color }}>
+                      <b>{usuario.username}</b> <span role="img" aria-label='pelota'>- {usuario.is_admin ? '⚽' : ''} </span>
+                    </div>
+
+                    {data.usuarios[UserId].is_admin ?
+                      <div className='col-5 text-end pe-0'>
+                        <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>1</button>
+                        &nbsp;&nbsp;
+                        <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>2</button>
+                        &nbsp;&nbsp;
+                        <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
+                      </div> :
+                      null
+                    }
+
+                  </div>
+                ))
               }
-              <span>
-                <b>ID:</b> &nbsp;
-                <span className='text-light text-decoration-underline'>{data.id}</span> &nbsp;
-                <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning fs-6 btn-sm'>Copiar</button>
-              </span>
-
             </div>
+          </div>
 
-            <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
+          <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+            <div className='fw-bold'>Equipo 1:</div>
+            <ol>
+              {data.usuarios && Object.values(data.usuarios)
+                .filter(usuario => usuario.equipo === 1) // filtrar por equipo 1
+                .sort((a, b) => a.order - b.order) // ordenar por timestamp
+                .map((usuario) => (
+                  <div className='row me-2' key={usuario.user_id}>
+                    <div className='col-7 pb-1' key={usuario.user_id}>
+                      <li key={usuario.user_id} style={{ color: usuario.color }}><b>{usuario.username}</b> <span role="img" aria-label='pelota'>{usuario.is_admin ? '⚽' : ''} </span> </li>
+                    </div>
 
+                    {data.usuarios[UserId].is_admin ?
+                      <div className='col-5 text-end pe-0'>
+                        <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'>⬇</button>
+                        &nbsp;&nbsp;
+                        <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
+                      </div> :
+                      null
+                    }
+                  </div>
 
-              <form>
-                <div className="row align-items-center mt-2">
-                  <label className="col-4 fw-bold form-labels" htmlFor="fecha">Fecha:</label>
-                  <div className="col-6">
-                    <input type="date" value={data.fecha} id="fecha"
-                      className="form-control fs-5 p-1" autoComplete='off' required
-                      onChange={(e) => setFormData({ ...formData, fecha: e.target.value })} />
-                  </div>
-                </div>
-                <div className="row align-items-center mt-2">
-                  <label className="col-4 fw-bold form-labels" htmlFor='hora'>Hora:</label>
-                  <div className="col-6">
-                    <input type="time" value={data.hora} id="hora" className="form-control fs-5 p-1" autoComplete="off" required
-                      onChange={(e) => setFormData({ ...formData, hora: e.target.value })} />
-                  </div>
-                </div>
-                <div className="row align-items-center mt-2">
-                  <label className="col-4 fw-bold form-labels" htmlFor='lugar'>Lugar:</label>
-                  <div className="col-6">
-                    <input type="text" value={data.lugar} id='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required
-                      onChange={(e) => setFormData({ ...formData, lugar: e.target.value })} />
-                  </div>
-                </div>
-                <div className="row align-items-center mt-2">
-                  <label className="col-4 fw-bold form-labels" htmlFor="precio" >Precio:</label>
-                  <div className="col-6">
-                    <input type="number" value={data.precio} id='precio' name='precio' placeholder='$' className="form-control fs-5 p-1" autoComplete="off" required
-                      onChange={(e) => setFormData({ ...formData, precio: Number(e.target.value) })} />
-                  </div>
-                </div>
-                <div className="row align-items-center mt-2">
-                  <label className="col-4 fw-bold form-labels" htmlFor='alquilado' >Alquilado:</label>
-                  <div className="col-6 ">
-                    <input type="checkbox" className="form-check-input fs-6 ms-0 ps-0 border border-dark " style={{ cursor: 'pointer' }} checked={data.alquilado} id="alquilado" autoComplete="off" required
-                      onChange={(e) => setFormData({ ...formData, alquilado: e.target.checked })} />
-                  </div>
-                </div>
-              </form>
+                ))
+              }
+            </ol>
+          </div>
 
+          <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+            <div className='fw-bold'>Equipo 2:</div>
+            <ol>
+              {data.usuarios && Object.values(data.usuarios)
+                .filter(usuario => usuario.equipo === 2) // filtrar por equipo 1
+                .sort((a, b) => a.order - b.order) // ordenar por timestamp
+                .map((usuario) => (
+                  <div className='row me-2' key={usuario.user_id}>
+                    <div className='col-7 pb-1' key={usuario.user_id}>
+                      <li key={usuario.user_id} style={{ color: usuario.color }}><b>{usuario.username}</b> <span role="img" aria-label='pelota'> {usuario.is_admin ? '⚽' : ''} </span></li>
+                    </div>
+
+                    {data.usuarios[UserId].is_admin ?
+                      <div className='col-5 text-end pe-0'>
+                        <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'>⬆</button>
+                        &nbsp;&nbsp;
+                        <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
+                      </div> :
+                      null
+                    }
+                  </div>
+                ))
+              }
+            </ol>
+          </div>
+
+          <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg'
+            style={{ borderRadius: "0px 0px 20px 20px", backgroundColor: "rgb(240, 240, 240)" }}>
+            <div className='text-center justify-content-center align-items-center'>
+              <button className='btn btn-secondary btn-lg'>Mezclar <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faShuffle} /></button>
             </div>
+          </div>
 
 
-            <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
-              <div className='text-center justify-content-center align-items-center fw-bold'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faPeopleGroup} /> ({numUsuarios}) </div>
-              <div className=''>
+          <div className='sub-container mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'
+            style={{ borderRadius: "20px 20px 20px 20px" }}>
+            <span className='text-white'><b>Chat</b></span>
 
-                {data.usuarios && Object.values(data.usuarios)
-                  .filter(usuario => usuario.equipo === 0) // filtrar por equipo 1
-                  .sort((a, b) => a.order - b.order) // ordenar por timestamp
-                  .map((usuario) => (
-                    <div className='row me-2' key={usuario.user_id}>
+            <div className='border rounded me-4 overflow-auto bg-white mb-3'>
+              <ul ref={messagesRef} className='overflow-auto ps-3' style={{ height: '300px', maxWidth: '494px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
+                <div className='text-black-50'>
+                  {data.chat ? '' : 'No hay mensajes...'}
+                </div>
 
-                      <div className='col-7 pb-1' key={usuario.user_id} style={{ color: usuario.color }}>
-                        <b>{usuario.username}</b> <span role="img" aria-label='pelota'>- {usuario.is_admin ? '⚽' : ''} </span>
-                      </div>
-
-                      {data.usuarios[UserId].is_admin ?
-                        <div className='col-5 text-end pe-0'>
-                          <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>1</button>
-                          &nbsp;&nbsp;
-                          <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>2</button>
-                          &nbsp;&nbsp;
-                          <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
-                        </div> :
-                        null
-                      }
-
+                {data.chat && Object.values(data.chat)
+                  .sort((a, b) => a.timestamp - b.timestamp) // ordenar por timestamp
+                  .map((mensaje) => (
+                    <div key={mensaje.message_id}>
+                      <b style={{ color: mensaje.color }}>{mensaje.sender_username}: </b>
+                      {mensaje.text}
                     </div>
                   ))
                 }
-              </div>
-            </div>
-
-            <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
-              <div className='fw-bold'>Equipo 1:</div>
-              <ol>
-                {data.usuarios && Object.values(data.usuarios)
-                  .filter(usuario => usuario.equipo === 1) // filtrar por equipo 1
-                  .sort((a, b) => a.order - b.order) // ordenar por timestamp
-                  .map((usuario) => (
-                    <div className='row me-2' key={usuario.user_id}>
-                      <div className='col-7 pb-1' key={usuario.user_id}>
-                        <li key={usuario.user_id} style={{ color: usuario.color }}><b>{usuario.username}</b> <span role="img" aria-label='pelota'>{usuario.is_admin ? '⚽' : ''} </span> </li>
-                      </div>
-
-                      {data.usuarios[UserId].is_admin ?
-                        <div className='col-5 text-end pe-0'>
-                          <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'>⬇</button>
-                          &nbsp;&nbsp;
-                          <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
-                        </div> :
-                        null
-                      }
-                    </div>
-
-                  ))
-                }
-              </ol>
-            </div>
-
-            <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
-              <div className='fw-bold'>Equipo 2:</div>
-              <ol>
-                {data.usuarios && Object.values(data.usuarios)
-                  .filter(usuario => usuario.equipo === 2) // filtrar por equipo 1
-                  .sort((a, b) => a.order - b.order) // ordenar por timestamp
-                  .map((usuario) => (
-                    <div className='row me-2' key={usuario.user_id}>
-                      <div className='col-7 pb-1' key={usuario.user_id}>
-                        <li key={usuario.user_id} style={{ color: usuario.color }}><b>{usuario.username}</b> <span role="img" aria-label='pelota'> {usuario.is_admin ? '⚽' : ''} </span></li>
-                      </div>
-
-                      {data.usuarios[UserId].is_admin ?
-                        <div className='col-5 text-end pe-0'>
-                          <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'>⬆</button>
-                          &nbsp;&nbsp;
-                          <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
-                        </div> :
-                        null
-                      }
-                    </div>
-                  ))
-                }
-              </ol>
-            </div>
-
-            <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg'
-              style={{ borderRadius: "0px 0px 20px 20px", backgroundColor: "rgb(240, 240, 240)" }}>
-              <div className='text-center justify-content-center align-items-center'>
-                <button className='btn btn-secondary btn-lg'>Mezclar <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faShuffle} /></button>
-              </div>
+              </ul>
             </div>
 
 
-            <div className='sub-container mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'
-              style={{ borderRadius: "20px 20px 20px 20px" }}>
-              <span className='text-white'><b>Chat</b></span>
-
-              <div className='border rounded me-4 overflow-auto bg-white mb-3'>
-                <ul ref={messagesRef} className='overflow-auto ps-3' style={{ height: '300px', maxWidth: '494px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
-                  <div className='text-black-50'>
-                    {data.chat ? '' : 'No hay mensajes...'}
-                  </div>
-
-                  {data.chat && Object.values(data.chat)
-                    .sort((a, b) => a.timestamp - b.timestamp) // ordenar por timestamp
-                    .map((mensaje) => (
-                      <div key={mensaje.message_id}>
-                        <b style={{ color: mensaje.color }}>{mensaje.sender_username}: </b>
-                        {mensaje.text}
-                      </div>
-                    ))
-                  }
-                </ul>
-              </div>
-
-
-              <form onSubmit={mensajeChat}>
-                <div className='row me-4'>
-                  <div className='col'>
-                    <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Escribe tu mensaje" required />
-                  </div>
-                  <div className='col-4 justify-content-start align-items-center text-start p-0'>
-                    <button type='submit' className='btn btn-primary btn-lg '> Enviar <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '2px' }} icon={faAngleRight} /> </button>
-                  </div>
+            <form onSubmit={mensajeChat}>
+              <div className='row me-4'>
+                <div className='col'>
+                  <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Escribe tu mensaje" required />
                 </div>
-              </form>
-
-            </div>
+                <div className='col-4 justify-content-start align-items-center text-start p-0'>
+                  <button type='submit' className='btn btn-primary btn-lg '> Enviar <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '2px' }} icon={faAngleRight} /> </button>
+                </div>
+              </div>
+            </form>
 
           </div>
         </div>
@@ -431,21 +426,18 @@ function PartidoComponent(props) {
     else if (!hasUserCookies) {
       return (
         <div>
-          <div className='background'>
-            <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'
-              style={{ borderRadius: "20px 20px 20px 20px", height: 'fit-content' }}>
-              <form onSubmit={unirsePartido}>
-                <div className='row me-4'>
-                  <div className='col-8'>
-                    <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Ingresa tu nombre" required />
-                  </div>
-                  <div className='col justify-content-center align-items-center m-auto text-center p-0'>
-                    <button type='submit' className='btn btn-primary border border-3 border-dark bold px-3'>Unirse <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} /> </button>
-                  </div>
+          <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'
+            style={{ borderRadius: "20px 20px 20px 20px", height: 'fit-content' }}>
+            <form onSubmit={unirsePartido}>
+              <div className='row me-4'>
+                <div className='col-8'>
+                  <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Ingresa tu nombre" required />
                 </div>
-              </form>
-            </div>
-
+                <div className='col justify-content-center align-items-center m-auto text-center p-0'>
+                  <button type='submit' className='btn btn-primary border border-3 border-dark bold px-3'>Unirse <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} /> </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       );
@@ -453,7 +445,7 @@ function PartidoComponent(props) {
 
   }
   else {
-    return (<div className='m-3 h5'>Cargando...</div>);
+    return (<div className='m-3 h5 text-light'>Cargando...</div>);
   }
 
 }
