@@ -41,7 +41,6 @@ nav{
 .nav-link-title {
     /* Estilos normales del enlace */
     border-bottom: 2px solid transparent;
-	font-family:cursive
 }
 
 .nav-link-title:hover {

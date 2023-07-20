@@ -48,12 +48,19 @@ function UnirsePartido() {
             setIsLoading(false);
         });
     };
+    // input ID onChange
+    const [event, getInputId] = useState('');
+    const [idLength, setIdLength] = useState(0);
+    
+    const handleChangeEvent = (event) => {
+        getInputId(event.target.value);
+        setIdLength(event.target.value.length);
+    }
 
+    // modal box
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-
+    const handleClose = () => {setShow(false), setIdLength(0)};
+    const handleShow = () => {setShow(true), setIdLength(0)};
 
     return (
         <div className="UnirsePartido">
@@ -73,7 +80,12 @@ function UnirsePartido() {
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={unirsePartido}>
-                        <input className='form-control-lg my-2 w-100' type='text' id='username' placeholder='Escribir aquí' name='username' required />
+                        <div className="input-group">
+                            <input type="text"  id='id' placeholder='Escribir aquí' name='id' required onChange={handleChangeEvent} maxLength={5} className="form-control border-2 fs-5 border-secondary" />
+                            <div className="input-group-append">
+                                <span className="input-group-text h-100 border border-2 border-secondary rounded-0 rounded-end">{idLength}/5</span>
+                            </div>
+                        </div>
                         <div className='mt-3 mb-2 text-center'>
                             <button type='submit' disabled={isLoading} className='btn btn-secondary border border-3 border-dark btn-lg bold px-4' style={{ minWidth: '190px', height: '52px' }}>
                             {!isLoading
@@ -82,8 +94,8 @@ function UnirsePartido() {
                                             Unirse <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} />
                                         </div>
                                     ) :
-                                    <div class="spinner-border text-light" role="status">
-                                        <span class="sr-only">Loading...</span>
+                                    <div className="spinner-border text-light" role="status">
+                                        <span className="sr-only"></span>
                                     </div>
                                 }
                             </button>
