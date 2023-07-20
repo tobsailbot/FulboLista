@@ -27,6 +27,7 @@ function UnirsePartido() {
     
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const unirsePartido = (event) => {
         setIsLoading(true);
@@ -40,14 +41,15 @@ function UnirsePartido() {
                 router.push(partido.url);
             }
             else {
-                console.log('No existe el partido, ID incorrecta');
+                setErrorMessage('No existe un partido con ese ID 😕');
                 setIsLoading(false);
             }
         }).catch((error) => {
-            console.log('Error al obtener los datos del partido: ', error);
+            setErrorMessage('Error: ' + error.message);
             setIsLoading(false);
         });
     };
+
     // input ID onChange
     const [event, getInputId] = useState('');
     const [idLength, setIdLength] = useState(0);
@@ -59,16 +61,16 @@ function UnirsePartido() {
 
     // modal box
     const [show, setShow] = useState(false);
-    const handleClose = () => {setShow(false), setIdLength(0)};
-    const handleShow = () => {setShow(true), setIdLength(0)};
+    const handleClose = () => {setShow(false), setIdLength(0), setErrorMessage('')};
+    const handleShow = () => {setShow(true), setIdLength(0), setErrorMessage('')};
 
     return (
-        <div className="UnirsePartido">
+        <div className="text-center">
 
             <button className="btn main-btn border border-3 rounded-4 p-2 py-3" style={{ border: 'rgb(215, 215, 215)' }} onClick={handleShow}>
                 <h3 className="text-center text-light mb-2">Unirse <FontAwesomeIcon icon={faPeopleGroup} height={24} />.</h3>
                 <p className="text-center text-light px-4 mx-1 pt-1">
-                    Únete a un partido existente utilizando el ID proporcionado por el organizador.
+                    Únete a un partido existente utilizando el ID.
                 </p>
             </button>
 
@@ -80,13 +82,14 @@ function UnirsePartido() {
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={unirsePartido}>
-                        <div className="input-group">
+                        <div className="input-group mt-2">
                             <input type="text"  id='id' placeholder='Escribir aquí' name='id' required onChange={handleChangeEvent} maxLength={5} className="form-control border-2 fs-5 border-secondary" />
                             <div className="input-group-append">
                                 <span className="input-group-text h-100 border border-2 border-secondary rounded-0 rounded-end">{idLength}/5</span>
                             </div>
                         </div>
-                        <div className='mt-3 mb-2 text-center'>
+                        <div className="ms-2 text-secondary">{errorMessage}</div>
+                        <div className='mb-2 mt-2 pt-2 text-center'>
                             <button type='submit' disabled={isLoading} className='btn btn-secondary border border-3 border-dark btn-lg bold px-4' style={{ minWidth: '190px', height: '52px' }}>
                             {!isLoading
                                     ? (
