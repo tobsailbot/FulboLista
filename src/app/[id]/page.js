@@ -1,10 +1,8 @@
-
+import PartidoComponent from "../components/Partido Component/PartidoComponent"
 
 export default function Page({params:{id}}){
     return(
-        <div>
-            hola! {id}
-        </div>
+        <PartidoComponent id={id} />
     )
 }
 
