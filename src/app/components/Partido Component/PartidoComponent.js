@@ -1,4 +1,5 @@
 'use client'
+require('dotenv').config();
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';

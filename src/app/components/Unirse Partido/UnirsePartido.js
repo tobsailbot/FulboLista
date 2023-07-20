@@ -1,4 +1,5 @@
 'use client'
+require('dotenv').config();
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons'
