@@ -6,7 +6,7 @@ function Page() {
 
 	return (
 		<div>
-			<div className='container p-5 mt-5'>
+			<div className='container p-5 mt-5 mb-4'>
 				<CrearPartido />
 				<br />
 				<br />

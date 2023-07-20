@@ -95,9 +95,20 @@ function CrearPartido() {
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={writeToDatabase}>
-                        <input className='form-control-lg my-2 w-100' type='text' id='username' placeholder='Escribir aquí' name='username' required maxLength={15}/>
+                        <input className='form-control-lg my-2 w-100' type='text' id='username' placeholder='Escribir aquí' name='username' required maxLength={15} />
                         <div className='mt-3 mb-2 text-center'>
-                            <button type='submit' disabled={isLoading} className='btn btn-warning border border-3 border-dark btn-lg bold px-4'>Crear Partido <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} /> </button>
+                            <button type='submit' disabled={isLoading} className='btn btn-warning border border-3 border-dark btn-lg bold px-4' style={{ minWidth: '190px', height: '52px' }}>
+                                {!isLoading
+                                    ? (
+                                        <div>
+                                            Crear Partido <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} />
+                                        </div>
+                                    ) :
+                                    <div class="spinner-border text-dark" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                }
+                            </button>
                         </div>
                     </form>
                 </Modal.Body>

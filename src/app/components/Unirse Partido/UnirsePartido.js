@@ -75,7 +75,18 @@ function UnirsePartido() {
                     <form onSubmit={unirsePartido}>
                         <input className='form-control-lg my-2 w-100' type='text' id='username' placeholder='Escribir aquí' name='username' required />
                         <div className='mt-3 mb-2 text-center'>
-                            <button type='submit' disabled={isLoading} className='btn btn-secondary border border-3 border-dark btn-lg bold px-4'>Unirse <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} /> </button>
+                            <button type='submit' disabled={isLoading} className='btn btn-secondary border border-3 border-dark btn-lg bold px-4' style={{ minWidth: '190px', height: '52px' }}>
+                            {!isLoading
+                                    ? (
+                                        <div>
+                                            Unirse <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} />
+                                        </div>
+                                    ) :
+                                    <div class="spinner-border text-light" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                }
+                            </button>
                         </div>
                     </form>
                 </Modal.Body>
