@@ -25,7 +25,7 @@ function CrearPartido() {
     const writeToDatabase = (event) => {
         event.preventDefault();
         const timestamp = new Date().getTime();
-        const id = uid(8);
+        const id = uid(5).toUpperCase();
         const user_id = uid(8);
         const partidoRef = ref(database, `partido/${id}`);
         let partido;
@@ -35,7 +35,7 @@ function CrearPartido() {
             lugar: "",
             fecha: "",
             hora: "",
-            precio: null,
+            precio: 0,
             alquilado: false,
             usuarios: {
                 [user_id]: {

@@ -114,6 +114,8 @@ function PartidoComponent(props) {
     update(dbRef, formData);
   }, [formData]);
 
+  
+
 
   const unirsePartido = (event) => {
     event.preventDefault();
@@ -139,7 +141,7 @@ function PartidoComponent(props) {
           }).then(() => {
             console.log('Los datos se han actualizado correctamente');
             // crear cookie con id del  partido y usuario
-            Cookies.set(id, user_id, { expires: 90 });
+            Cookies.set(id, user_id, { expires: 30 });
             // redirigir al PartidoComponent
             window.location.reload();
           });
@@ -277,7 +279,7 @@ function PartidoComponent(props) {
               <div className="row align-items-center mt-2">
                 <label className="col-4 fw-bold form-labels" htmlFor="precio" >Precio:</label>
                 <div className="col-6">
-                  <input type="number" value={data.precio} id='precio' name='precio' placeholder='$' className="form-control fs-5 p-1" autoComplete="off" required
+                  <input type="number" value={data.precio} id='precio' placeholder='$' className="form-control fs-5 p-1" autoComplete="off" required
                     onChange={(e) => setFormData({ ...formData, precio: Number(e.target.value) })} />
                 </div>
               </div>
