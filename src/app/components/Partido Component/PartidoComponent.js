@@ -140,7 +140,7 @@ function PartidoComponent(props) {
             // crear cookie con id del  partido y usuario
             Cookies.set(id, user_id, { expires: 90 });
             // redirigir al PartidoComponent
-            router.push(partido_url);
+            window.location.reload();
           });
         }
         else {
@@ -428,7 +428,7 @@ function PartidoComponent(props) {
 
       );
     }
-    else if (hasUserCookies === false) {
+    else if (!hasUserCookies) {
       return (
         <div>
           <div className='background'>

@@ -19,27 +19,28 @@ const database = getDatabase(app);
 ///// CAMBIOS /////
 // En este componente UnirsePArtido, solo se le pide el id del partido y se verifica si este id existe, si es asi se lo envia al PartidoComp  
 
-const unirsePartido = (event) => {
-    const router = useRouter();
-    event.preventDefault();
-    const id = event.target[0].value;
-
-    // verificar si existe el partidocn esa ID
-    get(ref(database, `partido/${id}`)).then((snapshot) => {
-        const partido = snapshot.val();
-        if (snapshot.exists()) {
-            router.push(partido.url);
-        }
-        else {
-            console.log('No existe el partido, ID incorrecta');
-        }
-    }).catch((error) => {
-        console.log('Error al obtener los datos del partido: ', error);
-    });
-};
 
 
 function UnirsePartido() {
+
+    const router = useRouter();
+    const unirsePartido = (event) => {
+        event.preventDefault();
+        const id = event.target[0].value;
+
+        // verificar si existe el partidocn esa ID
+        get(ref(database, `partido/${id}`)).then((snapshot) => {
+            const partido = snapshot.val();
+            if (snapshot.exists()) {
+                router.push(partido.url);
+            }
+            else {
+                console.log('No existe el partido, ID incorrecta');
+            }
+        }).catch((error) => {
+            console.log('Error al obtener los datos del partido: ', error);
+        });
+    };
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
