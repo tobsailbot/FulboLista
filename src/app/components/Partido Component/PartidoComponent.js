@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { faShuffle } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 
 import firebaseConfig from "@/app/utils/Firebase/firebaseConfig";
 import { uid } from 'uid';
@@ -16,7 +18,7 @@ import Cookies from 'js-cookie';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, get, update } from "firebase/database";
+import { getDatabase, ref, onValue, get, update, goOffline } from "firebase/database";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -225,7 +227,12 @@ function PartidoComponent(props) {
     });
   }
 
-
+    // Desconecta Firebase cuando el componente se desmonte (la aplicación se cierra)
+    useEffect(() => {
+      return () => {
+          goOffline(database)
+      };
+  }, []);
 
   // si existe data con el id de la url
   if (data !== null && data !== "") {
@@ -293,15 +300,14 @@ function PartidoComponent(props) {
           </div>
 
 
-          <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
-            <div className='text-center justify-content-center align-items-center fw-bold'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faPeopleGroup} /> ({numUsuarios}) </div>
-            <div className=''>
-
+          <div className='sub-container  pb-3 px-4 fs-4 lh-lg bg-white'>
+            <div className='text-center py-1 border-bottom mb-2 justify-content-center align-items-center fw-bold'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faPeopleGroup} /> ({numUsuarios}) </div>
+            <div>
               {data.usuarios && Object.values(data.usuarios)
                 .filter(usuario => usuario.equipo === 0) // filtrar por equipo 1
                 .sort((a, b) => a.order - b.order) // ordenar por timestamp
                 .map((usuario) => (
-                  <div className='row me-2' key={usuario.user_id}>
+                  <div className='row me-0' key={usuario.user_id}>
 
                     <div className='col-7 pb-1' key={usuario.user_id} style={{ color: usuario.color }}>
                       <b>{usuario.username}</b> <span role="img" aria-label='pelota'>- {usuario.is_admin ? '⚽' : ''} </span>
@@ -338,7 +344,7 @@ function PartidoComponent(props) {
 
                     {data.usuarios[UserId].is_admin ?
                       <div className='col-5 text-end pe-0'>
-                        <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'>⬇</button>
+                        <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '3px' }} icon={faChevronDown} /> </button>
                         &nbsp;&nbsp;
                         <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
                       </div> :

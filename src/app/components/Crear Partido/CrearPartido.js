@@ -7,13 +7,13 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import firebaseConfig from "@/app/utils/Firebase/firebaseConfig";
 import { uid } from 'uid';
 import Cookies from 'js-cookie';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { useRouter } from 'next/navigation';
 
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, get } from "firebase/database";
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, set, get, goOffline } from "firebase/database";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -66,7 +66,7 @@ function CrearPartido() {
                 setErrorMessage('Error: ' + error.message);
                 console.log('linea 1');
 
-                console.log('linea 1',error.message);
+                console.log('linea 1', error.message);
                 setIsLoading(false);
             });
         }).catch((error) => {
@@ -85,7 +85,7 @@ function CrearPartido() {
             if (alphanumericPattern.test(event.target.value)) {
                 setErrorMessage("");
             }
-            else{
+            else {
                 setErrorMessage("Esos caracteres no están permitidos 🙃");
             }
         }
