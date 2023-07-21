@@ -104,8 +104,6 @@ function PartidoComponent(props) {
       }
     });
 
-
-
   }, [id]);
 
   useEffect(() => {
@@ -235,8 +233,8 @@ function PartidoComponent(props) {
     if (hasUserCookies === true) {
       const numUsuarios = Object.keys(data.usuarios).length;
       return (
-
         <div>
+
           <div className='sub-container mt-4 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
             style={{ borderRadius: "20px 20px 0px 0px" }}>
             {
@@ -448,7 +446,12 @@ function PartidoComponent(props) {
 
   }
   else {
-    return (<div className='m-3 h5 text-light'>Cargando...</div>);
+    return (
+      <div className='text-center text-light fs-5'>
+      <div className="spinner-border border-5 m-5" style={{height:'150px', width:'150px'}} role="status"></div>
+      <div>Cargando...</div>
+    </div>
+    );
   }
 
 }
