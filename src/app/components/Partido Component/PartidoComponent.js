@@ -71,26 +71,23 @@ function PartidoComponent(props) {
             if (cookie && user.user_id === cookie.value) {
               user_data = user;
               UserId = user.user_id;
-              console.log('El usuario posee cookies guardadas con username: ' + user.username);
+              //console.log('El usuario posee cookies guardadas con username: ' + user.username);
               setHasUserCookies(true);
-              if (user.is_admin) {
-                console.log('es admin: ' + user.is_admin);
-              }
               break;
             }
             else {
               setHasUserCookies(false);
-              console.log('No existe el usuario en las cookies');
+              //console.log('No existe el usuario en las cookies');
             }
           }
         }
         else {
-          console.log('No existe el partido, ID incorrecta');
+          //console.log('No existe el partido, ID incorrecta');
           router.push('/');
         }
 
       }).catch((error) => {
-        console.log('Error al obtener los datos del partido: ', error);
+        //console.log('Error al obtener los datos del partido: ', error);
       });
     }
 
@@ -101,7 +98,7 @@ function PartidoComponent(props) {
         setData(snapshot.val());
       }
       else {
-        console.log("No existe el partido");
+        //console.log("No existe el partido");
         router.push('/');
       }
     });
@@ -139,7 +136,7 @@ function PartidoComponent(props) {
               "positionY": 0
             }
           }).then(() => {
-            console.log('Los datos se han actualizado correctamente');
+            //console.log('Los datos se han actualizado correctamente');
             // crear cookie con id del  partido y usuario
             Cookies.set(id, user_id, { expires: 30 });
             // redirigir al PartidoComponent
@@ -151,7 +148,7 @@ function PartidoComponent(props) {
         }
       }
     }).catch((error) => {
-      console.error('Error al obtener los datos del partido: ', error);
+      //console.error('Error al obtener los datos del partido: ', error);
     });
 
   }
@@ -171,9 +168,9 @@ function PartidoComponent(props) {
     update(ref(database, `partido/${id}/usuarios/${user_id}`), {
       "equipo": value,
     },).then(() => {
-      console.log('Los datos se han actualizado correctamente');
+      //console.log('Los datos se han actualizado correctamente');
     }).catch((error) => {
-      console.error('Error al escribir los datos: ', error);
+      //console.error('Error al escribir los datos: ', error);
     });
   }
 
@@ -185,9 +182,9 @@ function PartidoComponent(props) {
     update(ref(database, `partido/${id}/usuarios/${user_id}`), {
       "is_admin": value,
     },).then(() => {
-      console.log('Los datos se han actualizado correctamente');
+      //console.log('Los datos se han actualizado correctamente');
     }).catch((error) => {
-      console.error('Error al escribir los datos: ', error);
+      //console.error('Error al escribir los datos: ', error);
     });
   }
 
@@ -208,13 +205,13 @@ function PartidoComponent(props) {
         "timestamp": timestamp
       }
     }).then(() => {
-      console.log('Los datos se han actualizado correctamente');
+      //console.log('Los datos se han actualizado correctamente');
       const partidoRef = ref(database, `partido/${id}`);
       get(partidoRef).then((snapshot) => {
         const partido = snapshot.val();
-        console.log('Partido actualizado correctamente: ', partido);
+        //console.log('Partido actualizado correctamente: ', partido);
       }).catch((error) => {
-        console.error('Error al obtener los datos del partido: ', error);
+        //console.error('Error al obtener los datos del partido: ', error);
       });
 
       // Actualiza la propiedad scrollTop para mantener el scroll abajo cada vez que se actualiza la lista de mensajes
@@ -223,7 +220,7 @@ function PartidoComponent(props) {
       }
 
     }).catch((error) => {
-      console.error('Error al escribir los datos: ', error);
+      //console.error('Error al escribir los datos: ', error);
     });
   }
 
@@ -301,7 +298,7 @@ function PartidoComponent(props) {
 
 
           <div className='sub-container  pb-3 px-4 fs-4 lh-lg bg-white'>
-            <div className='text-center py-1 border-bottom mb-2 justify-content-center align-items-center fw-bold'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faPeopleGroup} /> ({numUsuarios}) </div>
+            <div className='text-center py-1 border-bottom mb-2 justify-content-center align-items-center fw-bold'>Jugadores: ({numUsuarios}) </div>
             <div>
               {data.usuarios && Object.values(data.usuarios)
                 .filter(usuario => usuario.equipo === 0) // filtrar por equipo 1
@@ -344,7 +341,7 @@ function PartidoComponent(props) {
 
                     {data.usuarios[UserId].is_admin ?
                       <div className='col-5 text-end pe-0'>
-                        <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '3px' }} icon={faChevronDown} /> </button>
+                        <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents:'none'}} icon={faChevronDown} /> </button>
                         &nbsp;&nbsp;
                         <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
                       </div> :
@@ -371,7 +368,7 @@ function PartidoComponent(props) {
 
                     {data.usuarios[UserId].is_admin ?
                       <div className='col-5 text-end pe-0'>
-                        <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'>⬆</button>
+                        <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents:'none'}} icon={faChevronUp} /></button>
                         &nbsp;&nbsp;
                         <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
                       </div> :
