@@ -11,6 +11,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { faShuffle } from '@fortawesome/free-solid-svg-icons'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 import firebaseConfig from "@/app/utils/Firebase/firebaseConfig";
 import { uid } from 'uid';
@@ -111,7 +112,7 @@ function PartidoComponent(props) {
     update(dbRef, formData);
   }, [formData]);
 
-  
+
 
 
   const unirsePartido = (event) => {
@@ -153,12 +154,17 @@ function PartidoComponent(props) {
 
   }
 
-
+  const [copiado, setCopiado] = useState(false);
   // copiar link al portapapeles
   const copiarLink = (event) => {
     event.preventDefault();
     navigator.clipboard.writeText(event.target.id);
-  }
+    setCopiado(true);
+
+    setTimeout(() => {
+      setCopiado(false);
+    }, 3000);
+  };
 
   const cambiarEquipo = (event) => {
     event.preventDefault();
@@ -224,11 +230,11 @@ function PartidoComponent(props) {
     });
   }
 
-    // Desconecta Firebase cuando el componente se desmonte (la aplicación se cierra)
-    useEffect(() => {
-      return () => {
-          goOffline(database)
-      };
+  // Desconecta Firebase cuando el componente se desmonte (la aplicación se cierra)
+  useEffect(() => {
+    return () => {
+      goOffline(database)
+    };
   }, []);
 
   // si existe data con el id de la url
@@ -239,7 +245,7 @@ function PartidoComponent(props) {
       return (
         <div>
 
-          <div className='sub-container mt-4 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
+          <div className='sub-container mt-4 text-white pt-3 pb-4 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
             style={{ borderRadius: "20px 20px 0px 0px" }}>
             {
               //<h1 className='p-2 m-0'>⚽ PeloTurno</h1>
@@ -247,7 +253,11 @@ function PartidoComponent(props) {
             <span>
               <b>ID:</b> &nbsp;
               <span className='text-light text-decoration-underline'>{data.id}</span> &nbsp;
-              <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning fs-6 btn-sm'>Copiar</button>
+              <button id={data.id} onClick={copiarLink} className='btn btn-warning fs-6 btn-sm'>
+                {!copiado ? ('Copiar')
+                  : <FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents: 'none', width: '43px' }} icon={faCheck} />
+                }
+              </button>
             </span>
 
           </div>
@@ -275,7 +285,7 @@ function PartidoComponent(props) {
                 <label className="col-4 fw-bold form-labels" htmlFor='lugar'>Lugar:</label>
                 <div className="col-6">
                   <input type="text" value={data.lugar} id='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required
-                    onChange={(e) => setFormData({ ...formData, lugar: e.target.value })} />
+                    onChange={(e) => setFormData({ ...formData, lugar: e.target.value })} maxLength={32}/>
                 </div>
               </div>
               <div className="row align-items-center mt-2">
@@ -285,10 +295,10 @@ function PartidoComponent(props) {
                     onChange={(e) => setFormData({ ...formData, precio: Number(e.target.value) })} />
                 </div>
               </div>
-              <div className="row align-items-center mt-2">
+              <div className="row align-items-center mt-2 mb-2">
                 <label className="col-4 fw-bold form-labels" htmlFor='alquilado' >Alquilado:</label>
-                <div className="col-6 ">
-                  <input type="checkbox" className="form-check-input fs-6 ms-0 ps-0 border border-dark " style={{ cursor: 'pointer' }} checked={data.alquilado} id="alquilado" autoComplete="off" required
+                <div className="col-6 d-flex">
+                  <input type="checkbox" className="form-check-input fs-5 m-0" style={{ cursor: 'pointer' }} checked={data.alquilado} id="alquilado" autoComplete="off" required
                     onChange={(e) => setFormData({ ...formData, alquilado: e.target.checked })} />
                 </div>
               </div>
@@ -297,8 +307,8 @@ function PartidoComponent(props) {
           </div>
 
 
-          <div className='sub-container  pb-3 px-4 fs-4 lh-lg bg-white'>
-            <div className='text-center py-1 border-bottom mb-2 justify-content-center align-items-center fw-bold'>Jugadores: ({numUsuarios}) </div>
+          <div className='sub-container pb-3 px-4 fs-4 lh-lg bg-white'>
+            <div className='text-center py-1 mb-2 justify-content-center align-items-center fw-bold'>Jugadores: ({numUsuarios}) </div>
             <div>
               {data.usuarios && Object.values(data.usuarios)
                 .filter(usuario => usuario.equipo === 0) // filtrar por equipo 1
@@ -327,21 +337,21 @@ function PartidoComponent(props) {
             </div>
           </div>
 
-          <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+          <div className='sub-container pt-3 pb-3 px-4 fs-4 lh-lg bg-white'>
             <div className='fw-bold'>Equipo 1:</div>
             <ol>
               {data.usuarios && Object.values(data.usuarios)
                 .filter(usuario => usuario.equipo === 1) // filtrar por equipo 1
                 .sort((a, b) => a.order - b.order) // ordenar por timestamp
                 .map((usuario) => (
-                  <div className='row me-2' key={usuario.user_id}>
+                  <div className='row me-0' key={usuario.user_id}>
                     <div className='col-7 pb-1' key={usuario.user_id}>
                       <li key={usuario.user_id} style={{ color: usuario.color }}><b>{usuario.username}</b> <span role="img" aria-label='pelota'>{usuario.is_admin ? '⚽' : ''} </span> </li>
                     </div>
 
                     {data.usuarios[UserId].is_admin ?
                       <div className='col-5 text-end pe-0'>
-                        <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents:'none'}} icon={faChevronDown} /> </button>
+                        <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents: 'none' }} icon={faChevronDown} /> </button>
                         &nbsp;&nbsp;
                         <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
                       </div> :
@@ -354,21 +364,21 @@ function PartidoComponent(props) {
             </ol>
           </div>
 
-          <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+          <div className='sub-container pt-3 pb-3 px-4 fs-4 lh-lg bg-white'>
             <div className='fw-bold'>Equipo 2:</div>
-            <ol>
+            <ol >
               {data.usuarios && Object.values(data.usuarios)
                 .filter(usuario => usuario.equipo === 2) // filtrar por equipo 1
                 .sort((a, b) => a.order - b.order) // ordenar por timestamp
                 .map((usuario) => (
-                  <div className='row me-2' key={usuario.user_id}>
+                  <div className='row me-0' key={usuario.user_id}>
                     <div className='col-7 pb-1' key={usuario.user_id}>
                       <li key={usuario.user_id} style={{ color: usuario.color }}><b>{usuario.username}</b> <span role="img" aria-label='pelota'> {usuario.is_admin ? '⚽' : ''} </span></li>
                     </div>
 
                     {data.usuarios[UserId].is_admin ?
                       <div className='col-5 text-end pe-0'>
-                        <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents:'none'}} icon={faChevronUp} /></button>
+                        <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents: 'none' }} icon={faChevronUp} /></button>
                         &nbsp;&nbsp;
                         <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
                       </div> :
@@ -380,7 +390,7 @@ function PartidoComponent(props) {
             </ol>
           </div>
 
-          <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg'
+          <div className='sub-container shadow pt-3 pb-3 ps-4 fs-4 lh-lg'
             style={{ borderRadius: "0px 0px 20px 20px", backgroundColor: "rgb(240, 240, 240)" }}>
             <div className='text-center justify-content-center align-items-center'>
               <button className='btn btn-secondary btn-lg'>Mezclar <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faShuffle} /></button>
@@ -388,7 +398,7 @@ function PartidoComponent(props) {
           </div>
 
 
-          <div className='sub-container mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'
+          <div className='sub-container shadow mt-5 mb-5 pb-3 pt-3 ps-4 fs-4 lh-lg'
             style={{ borderRadius: "20px 20px 20px 20px" }}>
             <span className='text-white'><b>Chat</b></span>
 
@@ -414,7 +424,7 @@ function PartidoComponent(props) {
             <form onSubmit={mensajeChat}>
               <div className='row me-4'>
                 <div className='col'>
-                  <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Escribe tu mensaje" required />
+                  <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Escribe tu mensaje" required maxLength={144} />
                 </div>
                 <div className='col-4 justify-content-start align-items-center text-start p-0'>
                   <button type='submit' className='btn btn-primary btn-lg '> Enviar <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '2px' }} icon={faAngleRight} /> </button>
@@ -451,9 +461,9 @@ function PartidoComponent(props) {
   else {
     return (
       <div className='text-center text-light fs-5'>
-      <div className="spinner-border border-5 m-5" style={{height:'150px', width:'150px'}} role="status"></div>
-      <div>Cargando...</div>
-    </div>
+        <div className="spinner-border border-5 m-5" style={{ height: '150px', width: '150px' }} role="status"></div>
+        <div>Cargando...</div>
+      </div>
     );
   }
 
