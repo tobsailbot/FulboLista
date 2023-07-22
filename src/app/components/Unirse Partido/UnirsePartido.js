@@ -32,7 +32,8 @@ function UnirsePartido() {
     const unirsePartido = (event) => {
         setIsLoading(true);
         event.preventDefault();
-        const id = event.target[0].value;
+        const input_id = event.target[0].value
+        const id = input_id.toUpperCase()
 
         // verificar si existe el partidocn esa ID
         get(ref(database, `partido/${id}`)).then((snapshot) => {

@@ -3,6 +3,7 @@ require('dotenv').config();
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import DraggableButton from './DraggableButton';
 
 import { coloresCSS } from '@/app/utils/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,7 +20,7 @@ import Cookies from 'js-cookie';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, get, update, goOffline } from "firebase/database";
+import { getDatabase, ref, onValue, get, update, goOffline, off } from "firebase/database";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -233,7 +234,8 @@ function PartidoComponent(props) {
   // Desconecta Firebase cuando el componente se desmonte (la aplicación se cierra)
   useEffect(() => {
     return () => {
-      goOffline(database)
+      off(database);
+      goOffline(database);
     };
   }, []);
 
@@ -245,7 +247,7 @@ function PartidoComponent(props) {
       return (
         <div>
 
-          <div className='sub-container mt-4 text-white pt-3 pb-4 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
+          <div className='sub-container mt-5 text-white pt-2 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
             style={{ borderRadius: "20px 20px 0px 0px" }}>
             {
               //<h1 className='p-2 m-0'>⚽ PeloTurno</h1>
@@ -268,7 +270,7 @@ function PartidoComponent(props) {
             <form>
               <div className="row align-items-center mt-2">
                 <label className="col-4 fw-bold form-labels" htmlFor="fecha">Fecha:</label>
-                <div className="col-6">
+                <div className="col-7">
                   <input type="date" value={data.fecha} id="fecha"
                     className="form-control fs-5 p-1" autoComplete='off' required
                     onChange={(e) => setFormData({ ...formData, fecha: e.target.value })} />
@@ -276,21 +278,21 @@ function PartidoComponent(props) {
               </div>
               <div className="row align-items-center mt-2">
                 <label className="col-4 fw-bold form-labels" htmlFor='hora'>Hora:</label>
-                <div className="col-6">
+                <div className="col-7">
                   <input type="time" value={data.hora} id="hora" className="form-control fs-5 p-1" autoComplete="off" required
                     onChange={(e) => setFormData({ ...formData, hora: e.target.value })} />
                 </div>
               </div>
               <div className="row align-items-center mt-2">
                 <label className="col-4 fw-bold form-labels" htmlFor='lugar'>Lugar:</label>
-                <div className="col-6">
+                <div className="col-7">
                   <input type="text" value={data.lugar} id='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required
                     onChange={(e) => setFormData({ ...formData, lugar: e.target.value })} maxLength={32}/>
                 </div>
               </div>
               <div className="row align-items-center mt-2">
                 <label className="col-4 fw-bold form-labels" htmlFor="precio" >Precio:</label>
-                <div className="col-6">
+                <div className="col-7">
                   <input type="number" value={data.precio} id='precio' placeholder='$' className="form-control fs-5 p-1" autoComplete="off" required
                     onChange={(e) => setFormData({ ...formData, precio: Number(e.target.value) })} />
                 </div>
@@ -307,8 +309,8 @@ function PartidoComponent(props) {
           </div>
 
 
-          <div className='sub-container pb-3 px-4 fs-4 lh-lg bg-white'>
-            <div className='text-center py-1 mb-2 justify-content-center align-items-center fw-bold'>Jugadores: ({numUsuarios}) </div>
+          <div className='sub-container py-2 px-4 fs-4 lh-lg bg-white'>
+            <div className='text-center py-1  justify-content-center align-items-center fw-bold'>Jugadores: ({numUsuarios}) </div>
             <div>
               {data.usuarios && Object.values(data.usuarios)
                 .filter(usuario => usuario.equipo === 0) // filtrar por equipo 1
@@ -398,6 +400,10 @@ function PartidoComponent(props) {
           </div>
 
 
+          <div className='container-md text-light shadow mt-5 mb-5 pb-3 pt-3 ps-4 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
+            <DraggableButton/>
+          </div>  
+
           <div className='sub-container shadow mt-5 mb-5 pb-3 pt-3 ps-4 fs-4 lh-lg'
             style={{ borderRadius: "20px 20px 20px 20px" }}>
             <span className='text-white'><b>Chat</b></span>
@@ -433,6 +439,8 @@ function PartidoComponent(props) {
             </form>
 
           </div>
+
+
         </div>
 
       );
