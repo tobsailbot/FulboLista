@@ -3,7 +3,7 @@ require('dotenv').config();
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import DraggableButton from './DraggableButton';
+import MovePlayers from './MovePlayers';
 
 import { coloresCSS } from '@/app/utils/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -417,7 +417,7 @@ function PartidoComponent(props) {
 
 
           <div className='container-md text-light shadow mt-5 mb-5 pb-3 pt-3 ps-4 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
-            <DraggableButton 
+            <MovePlayers 
               thisUser={user_data} 
               users={data.usuarios} 
               onPositionUpdate={handlePositionUpdate}

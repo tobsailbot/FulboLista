@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-const DraggableButton = ({ thisUser, users, onPositionUpdate }) => {
+const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
 
   const [isDragging, setIsDragging] = useState(false);
   const buttonRef = useRef(null);
@@ -96,48 +96,36 @@ const DraggableButton = ({ thisUser, users, onPositionUpdate }) => {
       <span>
         Y: <input type="number" value={newPosY} readOnly />
       </span>
-      <div
-        ref={divRef}
-        style={{
-          width: '400px',
-          height: '400px',
-          border: '1px solid black',
-          position: 'relative',
-          overflow: 'hidden',
-          backgroundColor: 'green'
-        }}
-      >
+      <div className='playersField' ref={divRef}>
         <button
           ref={buttonRef}
+          className='playerBall'
           style={{
-            position: 'absolute',
             left: 0,
             top: 0,
-            width: '35px',
-            height: '35px',
-            borderRadius: '50%',
             backgroundColor: this_user.color,
             zIndex: '999',
             borderColor: 'white'
           }}
           onMouseDown={handleMoveStart}
           onTouchStart={handleMoveStart}
-        ></button>
+        >
+          <p className='playerName'>{this_user.username}</p>
+        </button>
 
         {all_users && Object.values(all_users)
           .filter(usuario => usuario.id != this_user.id) // ocultar usuario actual
           .map((usuario) => (
-            <div key={usuario.id}
+            <button key={usuario.id}
+              className='playerBall'
               style={{
-                position: 'absolute',
                 left: usuario.positionX,
                 top: usuario.positionY,
-                width: '35px',
-                height: '35px',
-                borderRadius: '50%',
                 backgroundColor: usuario.color,
               }}
-            ></div>
+            >
+              <p className='playerName'>{usuario.username}</p>
+            </button>
           ))
         }
 
@@ -146,5 +134,5 @@ const DraggableButton = ({ thisUser, users, onPositionUpdate }) => {
   );
 };
 
-export default DraggableButton;
+export default MovePlayers;
 
