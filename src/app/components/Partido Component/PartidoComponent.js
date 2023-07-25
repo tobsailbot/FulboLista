@@ -239,6 +239,22 @@ function PartidoComponent(props) {
     };
   }, []);
 
+
+  // esta funcion conecta con componente hijo
+  const handlePositionUpdate = (newX, newY) => {
+    console.log('Button position updated:', newX, newY);
+    update(ref(database, `partido/${id}/usuarios/${user_data.user_id}`), {
+      "positionX": newX,
+      "positionY": newY,
+    },).then(() => {
+      //console.log('Los datos se han actualizado correctamente');
+    }).catch((error) => {
+      //console.error('Error al escribir los datos: ', error);
+    });
+    
+  };
+
+
   // si existe data con el id de la url
   if (data !== null && data !== "") {
 
@@ -401,7 +417,11 @@ function PartidoComponent(props) {
 
 
           <div className='container-md text-light shadow mt-5 mb-5 pb-3 pt-3 ps-4 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
-            <DraggableButton/>
+            <DraggableButton 
+              initialX={user_data.positionX} 
+              initialY={user_data.positionY} 
+              onPositionUpdate={handlePositionUpdate}
+              />
           </div>  
 
           <div className='sub-container shadow mt-5 mb-5 pb-3 pt-3 ps-4 fs-4 lh-lg'
@@ -425,7 +445,6 @@ function PartidoComponent(props) {
                 }
               </ul>
             </div>
-
 
             <form onSubmit={mensajeChat}>
               <div className='row me-4'>
