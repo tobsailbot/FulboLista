@@ -43,7 +43,7 @@ function CrearPartido() {
             alquilado: false,
             usuarios: {
                 [user_id]: {
-                    "user_id": user_id,
+                    "id": user_id,
                     "username": event.target[0].value,
                     "color": "#FF0000",
                     "is_admin": true,

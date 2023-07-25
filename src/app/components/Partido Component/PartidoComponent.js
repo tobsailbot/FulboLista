@@ -70,9 +70,9 @@ function PartidoComponent(props) {
           for (const userId in data.usuarios) {
             const user = data.usuarios[userId];
             // buscar si el id de usuario en la db coincide con el valor de la cookie
-            if (cookie && user.user_id === cookie.value) {
+            if (cookie && user.id === cookie.value) {
               user_data = user;
-              UserId = user.user_id;
+              UserId = user.id;
               //console.log('El usuario posee cookies guardadas con username: ' + user.username);
               setHasUserCookies(true);
               break;
@@ -129,7 +129,7 @@ function PartidoComponent(props) {
           const user_id = uid(8);
           update(ref(database, `partido/${id}/usuarios`), {
             [user_id]: {
-              "user_id": user_id,
+              "id": user_id,
               "username": event.target[0].value,
               "color": coloresCSS[numUsuarios - 1],
               "order": timestamp,
@@ -243,7 +243,7 @@ function PartidoComponent(props) {
   // esta funcion conecta con componente hijo
   const handlePositionUpdate = (newX, newY) => {
     console.log('Button position updated:', newX, newY);
-    update(ref(database, `partido/${id}/usuarios/${user_data.user_id}`), {
+    update(ref(database, `partido/${id}/usuarios/${user_data.id}`), {
       "positionX": newX,
       "positionY": newY,
     },).then(() => {
@@ -332,19 +332,19 @@ function PartidoComponent(props) {
                 .filter(usuario => usuario.equipo === 0) // filtrar por equipo 1
                 .sort((a, b) => a.order - b.order) // ordenar por timestamp
                 .map((usuario) => (
-                  <div className='row me-0' key={usuario.user_id}>
+                  <div className='row me-0' key={usuario.id}>
 
-                    <div className='col-7 pb-1' key={usuario.user_id} style={{ color: usuario.color }}>
+                    <div className='col-7 pb-1' key={usuario.id} style={{ color: usuario.color }}>
                       <b>{usuario.username}</b> <span role="img" aria-label='pelota'>- {usuario.is_admin ? '⚽' : ''} </span>
                     </div>
 
                     {data.usuarios[UserId].is_admin ?
                       <div className='col-5 text-end pe-0'>
-                        <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>1</button>
+                        <button name={usuario.id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>1</button>
                         &nbsp;&nbsp;
-                        <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>2</button>
+                        <button name={usuario.id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>2</button>
                         &nbsp;&nbsp;
-                        <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
+                        <button name={usuario.id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
                       </div> :
                       null
                     }
@@ -362,16 +362,16 @@ function PartidoComponent(props) {
                 .filter(usuario => usuario.equipo === 1) // filtrar por equipo 1
                 .sort((a, b) => a.order - b.order) // ordenar por timestamp
                 .map((usuario) => (
-                  <div className='row me-0' key={usuario.user_id}>
-                    <div className='col-7 pb-1' key={usuario.user_id}>
-                      <li key={usuario.user_id} style={{ color: usuario.color }}><b>{usuario.username}</b> <span role="img" aria-label='pelota'>{usuario.is_admin ? '⚽' : ''} </span> </li>
+                  <div className='row me-0' key={usuario.id}>
+                    <div className='col-7 pb-1' key={usuario.id}>
+                      <li key={usuario.id} style={{ color: usuario.color }}><b>{usuario.username}</b> <span role="img" aria-label='pelota'>{usuario.is_admin ? '⚽' : ''} </span> </li>
                     </div>
 
                     {data.usuarios[UserId].is_admin ?
                       <div className='col-5 text-end pe-0'>
-                        <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents: 'none' }} icon={faChevronDown} /> </button>
+                        <button name={usuario.id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents: 'none' }} icon={faChevronDown} /> </button>
                         &nbsp;&nbsp;
-                        <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
+                        <button name={usuario.id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
                       </div> :
                       null
                     }
@@ -389,16 +389,16 @@ function PartidoComponent(props) {
                 .filter(usuario => usuario.equipo === 2) // filtrar por equipo 1
                 .sort((a, b) => a.order - b.order) // ordenar por timestamp
                 .map((usuario) => (
-                  <div className='row me-0' key={usuario.user_id}>
-                    <div className='col-7 pb-1' key={usuario.user_id}>
-                      <li key={usuario.user_id} style={{ color: usuario.color }}><b>{usuario.username}</b> <span role="img" aria-label='pelota'> {usuario.is_admin ? '⚽' : ''} </span></li>
+                  <div className='row me-0' key={usuario.id}>
+                    <div className='col-7 pb-1' key={usuario.id}>
+                      <li key={usuario.id} style={{ color: usuario.color }}><b>{usuario.username}</b> <span role="img" aria-label='pelota'> {usuario.is_admin ? '⚽' : ''} </span></li>
                     </div>
 
                     {data.usuarios[UserId].is_admin ?
                       <div className='col-5 text-end pe-0'>
-                        <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents: 'none' }} icon={faChevronUp} /></button>
+                        <button name={usuario.id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'><FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents: 'none' }} icon={faChevronUp} /></button>
                         &nbsp;&nbsp;
-                        <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
+                        <button name={usuario.id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
                       </div> :
                       null
                     }
@@ -418,8 +418,8 @@ function PartidoComponent(props) {
 
           <div className='container-md text-light shadow mt-5 mb-5 pb-3 pt-3 ps-4 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
             <DraggableButton 
-              initialX={user_data.positionX} 
-              initialY={user_data.positionY} 
+              thisUser={user_data} 
+              users={data.usuarios} 
               onPositionUpdate={handlePositionUpdate}
               />
           </div>  
