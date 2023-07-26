@@ -416,7 +416,8 @@ function PartidoComponent(props) {
           </div>
 
 
-          <div className='container-md text-light shadow mt-5 mb-5 pb-3 pt-3 ps-4 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
+          <div className='container bg-secondary shadow text-center mt-4 mb-5 pb-4 pt-3 ps-4 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
+          <p className='text-white fw-bold'>Campo de Juego</p>
             <MovePlayers 
               thisUser={user_data} 
               users={data.usuarios} 

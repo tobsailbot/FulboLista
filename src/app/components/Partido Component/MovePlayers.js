@@ -88,19 +88,14 @@ const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
 
 
   return (
-    <div style={{ margin: '10px' }}>
-      <span>
-        X: <input type="number" value={newPosX} readOnly />
-      </span>
-      <br />
-      <span>
-        Y: <input type="number" value={newPosY} readOnly />
-      </span>
-      <div className='playersField' ref={divRef}>
+    <div style={{ margin: 'auto' }}>
+
+      <div className='playersField m-auto' ref={divRef}>
         <button
           ref={buttonRef}
           className='playerBall'
           style={{
+            cursor:'pointer',
             left: 0,
             top: 0,
             backgroundColor: this_user.color,
@@ -116,7 +111,7 @@ const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
         {all_users && Object.values(all_users)
           .filter(usuario => usuario.id != this_user.id) // ocultar usuario actual
           .map((usuario) => (
-            <button key={usuario.id}
+            <button type='none' key={usuario.id}
               className='playerBall'
               style={{
                 left: usuario.positionX,

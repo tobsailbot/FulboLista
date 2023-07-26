@@ -124,6 +124,7 @@ header{
   }
   
   .playerBall{
+	cursor: default;
 	width: 40px;
 	height: 40px;
 	border-radius: 35%;
@@ -136,11 +137,16 @@ header{
 	transition-duration: 0.3s; /* Puedes ajustar la duración de la transición aquí */
   }
   
+  .playerBall:hover{
+	cursor: default;
+  }
+  
   .playerName{
 	position: relative;
-	top: 26px;
+	top: 32px;
 	right: 16px;
 	width: 55px;
 	color: white;
 	font-size: 14px;
+	margin: auto;
   }
