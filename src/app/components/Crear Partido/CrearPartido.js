@@ -54,19 +54,19 @@ function CrearPartido() {
                 }
             }
         }).then(() => {
-            console.log('Los datos se han escrito correctamente');
+           // console.log('Los datos se han escrito correctamente');
             get(partidoRef).then((snapshot) => {
                 partido = snapshot.val();
-                console.log('Partido creado correctamente: ', partido);
+                //console.log('Partido creado correctamente: ', partido);
                 // crear cookie con id del  partido y usuario
                 Cookies.set(id, user_id, { expires: 60 });
                 // redirigir al PartidoComponent
                 router.push(partido.url);
             }).catch((error) => {
                 setErrorMessage('Error: ' + error.message);
-                console.log('linea 1');
+               // console.log('linea 1');
 
-                console.log('linea 1', error.message);
+                //console.log('linea 1', error.message);
                 setIsLoading(false);
             });
         }).catch((error) => {

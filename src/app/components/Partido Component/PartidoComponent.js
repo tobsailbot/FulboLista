@@ -244,7 +244,7 @@ function PartidoComponent(props) {
 
   // esta funcion conecta con componente hijo
   const handlePositionUpdate = (newX, newY) => {
-    console.log('Button position updated:', newX, newY);
+    //console.log('Button position updated:', newX, newY);
     update(ref(database, `partido/${id}/usuarios/${user_data.id}`), {
       "positionX": newX,
       "positionY": newY,
