@@ -88,6 +88,7 @@ const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
     <div className='playersField m-auto' ref={divRef}>
 
       <div className='arco1'></div>
+      <div className='puntoCentro'></div>
       <div className='lineaMedio'></div>
       <div className='arco2'></div>
 

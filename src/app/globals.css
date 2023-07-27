@@ -152,8 +152,8 @@ header{
 	margin: auto;
   }
 
-  .arco1{
-	border: 3px solid white;
+  .arco1 {
+	border: 3px solid lightgrey;
 	border-top: none;
 	border-radius: 0px 0px 10px 10px;
 	height: 30px;
@@ -161,13 +161,25 @@ header{
 	margin: auto;
   }
   
-  .lineaMedio{
-	border-bottom: 3px solid white;
+  .puntoCentro {
+	border: 3px solid lightgrey;
+  
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	margin: auto;
+	position: absolute;
+	top: 235px;
+	left: 151px;
+  }
+  
+  .lineaMedio {
+	border-bottom: 3px solid lightgrey;
 	height: 217px;
   }
   
-  .arco2{
-	border: 3px solid white;
+  .arco2 {
+	border: 3px solid lightgrey;
 	border-bottom: none;
 	border-radius: 10px 10px 0px 0px;
 	height: 30px;

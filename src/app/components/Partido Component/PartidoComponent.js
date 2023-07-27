@@ -418,9 +418,9 @@ function PartidoComponent(props) {
           </div>
 
 
-          <div className='container bg-transparent shadow text-center mt-5 mb-5 pb-5 pt-2 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
-          <p className='text-white fw-bold pb-0 mb-0'>Campo de Juego</p>
-          <p className='text-white fs-5'>Arrastra tu jugador a una posición <FontAwesomeIcon className="ms-1" style={{ position: 'relative' }} icon={faHandPointer} /></p>
+        <div className='container bg-transparent shadow text-center mt-5 mb-5 pb-5 pt-3 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
+          <p className='text-white lh-base fw-bold pb-0 mb-0'>Campo de Juego</p>
+          <p className='text-white lh-base fs-5 mb-4'>Arrastra tu jugador a una posición <FontAwesomeIcon className="ms-1" style={{ position: 'relative' }} icon={faHandPointer} /></p>
             <MovePlayers 
               thisUser={user_data} 
               users={data.usuarios} 
