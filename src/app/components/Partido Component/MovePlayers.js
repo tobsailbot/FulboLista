@@ -34,10 +34,10 @@ const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
       var { clientX, clientY } = touch;
     }
     else {
-      if (!isDragging) return;
       var { clientX, clientY } = event;
     }
-
+    
+    if (!isDragging) return;
     const { left, top, width, height } = divRef.current.getBoundingClientRect();
     const { width: buttonWidth, height: buttonHeight } = buttonRef.current.getBoundingClientRect();
 
@@ -56,7 +56,6 @@ const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
     setNewPosX(newPositionX);
     setNewPosY(newPositionY);
     buttonRef.current.style.transform = `translate(${newPositionX}px, ${newPositionY}px)`;
-
   };
 
   const handleMoveEnd = () => {
@@ -71,12 +70,9 @@ const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
     buttonRef.current.style.transform = `translate(${newPosX}px, ${newPosY}px)`;
 
     if (!isDragging) {
-      //console.log('X: '+ newPosX);
-      //console.log('Y: '+ newPosY);
       // después de actualizar la posición, llama a la función de callback
       onPositionUpdate(newPosX, newPosY);
     }
-
 
     return () => {
       document.removeEventListener('mousemove', handleMove);
@@ -88,9 +84,10 @@ const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
 
 
   return (
-    <div style={{ margin: 'auto' }}>
 
-      <div className='playersField m-auto' ref={divRef}>
+      <div className='playersField m-auto'
+      ref={divRef}
+      >
         <button
           ref={buttonRef}
           className='playerBall'
@@ -123,9 +120,8 @@ const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
             </button>
           ))
         }
-
       </div>
-    </div>
+
   );
 };
 

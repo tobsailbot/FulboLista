@@ -135,6 +135,7 @@ header{
 	/* Agregar las propiedades de transición */
 	transition-property: top, left;
 	transition-duration: 0.3s; /* Puedes ajustar la duración de la transición aquí */
+	touch-action: none;
   }
   
   .playerBall:hover{

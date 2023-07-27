@@ -86,7 +86,7 @@ function CrearPartido() {
                 setErrorMessage("");
             }
             else {
-                setErrorMessage("Esos caracteres no están permitidos 🙃");
+                setErrorMessage("Hay caracteres que no están permitidos 🙃");
             }
         }
     }
