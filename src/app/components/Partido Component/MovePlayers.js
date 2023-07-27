@@ -36,7 +36,7 @@ const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
     else {
       var { clientX, clientY } = event;
     }
-    
+
     if (!isDragging) return;
     const { left, top, width, height } = divRef.current.getBoundingClientRect();
     const { width: buttonWidth, height: buttonHeight } = buttonRef.current.getBoundingClientRect();
@@ -85,42 +85,45 @@ const MovePlayers = ({ thisUser, users, onPositionUpdate }) => {
 
   return (
 
-      <div className='playersField m-auto'
-      ref={divRef}
-      >
-        <button
-          ref={buttonRef}
-          className='playerBall'
-          style={{
-            cursor:'pointer',
-            left: 0,
-            top: 0,
-            backgroundColor: this_user.color,
-            zIndex: '999',
-            borderColor: 'white'
-          }}
-          onMouseDown={handleMoveStart}
-          onTouchStart={handleMoveStart}
-        >
-          <p className='playerName'>{this_user.username}</p>
-        </button>
+    <div className='playersField m-auto' ref={divRef}>
 
-        {all_users && Object.values(all_users)
-          .filter(usuario => usuario.id != this_user.id) // ocultar usuario actual
-          .map((usuario) => (
-            <button type='none' key={usuario.id}
-              className='playerBall'
-              style={{
-                left: usuario.positionX,
-                top: usuario.positionY,
-                backgroundColor: usuario.color,
-              }}
-            >
-              <p className='playerName'>{usuario.username}</p>
-            </button>
-          ))
-        }
-      </div>
+      <div className='arco1'></div>
+      <div className='lineaMedio'></div>
+      <div className='arco2'></div>
+
+      <button
+        ref={buttonRef}
+        className='playerBall'
+        style={{
+          cursor: 'pointer',
+          left: 0,
+          top: 0,
+          backgroundColor: this_user.color,
+          zIndex: '999',
+          borderColor: 'white'
+        }}
+        onMouseDown={handleMoveStart}
+        onTouchStart={handleMoveStart}
+      >
+        <p className='playerName'>{this_user.username}</p>
+      </button>
+
+      {all_users && Object.values(all_users)
+        .filter(usuario => usuario.id != this_user.id) // ocultar usuario actual
+        .map((usuario) => (
+          <button type='none' key={usuario.id}
+            className='playerBall'
+            style={{
+              left: usuario.positionX,
+              top: usuario.positionY,
+              backgroundColor: usuario.color,
+            }}
+          >
+            <p className='playerName'>{usuario.username}</p>
+          </button>
+        ))
+      }
+    </div>
 
   );
 };

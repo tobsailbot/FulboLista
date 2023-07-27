@@ -13,6 +13,8 @@ import { faShuffle } from '@fortawesome/free-solid-svg-icons'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faHandPointer } from '@fortawesome/free-solid-svg-icons'
+import { faMessage } from '@fortawesome/free-solid-svg-icons'
 
 import firebaseConfig from "@/app/utils/Firebase/firebaseConfig";
 import { uid } from 'uid';
@@ -416,8 +418,9 @@ function PartidoComponent(props) {
           </div>
 
 
-          <div className='container bg-transparent shadow text-center mt-5 mb-5 pb-4 pt-3 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
-          <p className='text-white fw-bold'>Campo de Juego</p>
+          <div className='container bg-transparent shadow text-center mt-5 mb-5 pb-5 pt-2 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
+          <p className='text-white fw-bold pb-0 mb-0'>Campo de Juego</p>
+          <p className='text-white fs-5'>Arrastra tu jugador a una posición <FontAwesomeIcon className="ms-1" style={{ position: 'relative' }} icon={faHandPointer} /></p>
             <MovePlayers 
               thisUser={user_data} 
               users={data.usuarios} 
@@ -425,11 +428,11 @@ function PartidoComponent(props) {
               />
           </div>  
 
-          <div className='sub-container shadow mt-5 mb-5 pb-3 pt-3 ps-4 fs-4 lh-lg'
+          <div className='sub-container shadow mt-5 mb-5 pb-4 pt-3 ps-4 fs-4 lh-lg'
             style={{ borderRadius: "20px 20px 20px 20px" }}>
-            <span className='text-white'><b>Chat</b></span>
+            <span className='text-white'><FontAwesomeIcon className="me-1" style={{ position: 'relative', top:'1px' }} icon={faMessage} /> <b>Chat</b></span>
 
-            <div className='border rounded me-4 overflow-auto bg-white mb-3'>
+            <div className='border rounded me-4 overflow-auto bg-white mb-3 mt-3'>
               <ul ref={messagesRef} className='overflow-auto ps-3' style={{ height: '300px', maxWidth: '494px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
                 <div className='text-black-50'>
                   {data.chat ? '' : 'No hay mensajes...'}

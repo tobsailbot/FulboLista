@@ -151,3 +151,28 @@ header{
 	font-size: 14px;
 	margin: auto;
   }
+
+  .arco1{
+	border: 3px solid white;
+	border-top: none;
+	border-radius: 0px 0px 10px 10px;
+	height: 30px;
+	width: 33%;
+	margin: auto;
+  }
+  
+  .lineaMedio{
+	border-bottom: 3px solid white;
+	height: 217px;
+  }
+  
+  .arco2{
+	border: 3px solid white;
+	border-bottom: none;
+	border-radius: 10px 10px 0px 0px;
+	height: 30px;
+	width: 33%;
+	margin: auto;
+	position: relative;
+	top: 215px;
+  }
