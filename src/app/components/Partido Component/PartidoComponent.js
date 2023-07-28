@@ -15,6 +15,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faHandPointer } from '@fortawesome/free-solid-svg-icons'
 import { faMessage } from '@fortawesome/free-solid-svg-icons'
+import { faCopy } from '@fortawesome/free-solid-svg-icons'
 
 import firebaseConfig from "@/app/utils/Firebase/firebaseConfig";
 import { uid } from 'uid';
@@ -293,9 +294,15 @@ const handleChangeEvent = (event) => {
               <b>ID:</b> &nbsp;
               <span className='text-light text-decoration-underline'>{data.id}</span> &nbsp;
               <button id={data.id} onClick={copiarLink} className='btn btn-warning fs-6 btn-sm'>
-                {!copiado ? ('Copiar')
-                  : <FontAwesomeIcon className="ms-1" style={{ position: 'relative', right: '2px', pointerEvents: 'none', width: '43px' }} icon={faCheck} />
-                }
+                {!copiado ? (
+                  <span>
+                    <FontAwesomeIcon style={{ position: 'relative', right: '2px', pointerEvents: 'none', width: '18px' }} icon={faCopy} /> Copiar
+                  </span>
+                  ):
+                  <span>
+                    <FontAwesomeIcon style={{ position: 'relative', right: '2px', pointerEvents: 'none', width: '18px' }} icon={faCheck} /> Copiar
+                  </span>                
+                  }
               </button>
             </span>
 
