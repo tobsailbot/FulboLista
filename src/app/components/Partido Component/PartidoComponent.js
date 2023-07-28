@@ -454,11 +454,11 @@ const handleChangeEvent = (event) => {
             />
           </div>
 
-          <div className='sub-container shadow mt-5 mb-5 pb-4 pt-3 ps-4 fs-4 lh-lg'
+          <div className='sub-container shadow mt-5 mb-5 pb-4 pt-3 px-4 fs-4 lh-lg'
             style={{ borderRadius: "20px 20px 20px 20px" }}>
             <span className='text-white'><FontAwesomeIcon className="me-1" style={{ position: 'relative', top: '1px' }} icon={faMessage} /> <b>Chat</b></span>
 
-            <div className='border rounded me-4 overflow-auto bg-white mb-3 mt-3'>
+            <div className='border rounded  overflow-auto bg-white mb-3 mt-3'>
               <ul ref={messagesRef} className='overflow-auto ps-3' style={{ height: '300px', maxWidth: '494px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
                 <div className='text-black-50'>
                   {data.chat ? '' : 'No hay mensajes...'}
@@ -477,11 +477,11 @@ const handleChangeEvent = (event) => {
             </div>
 
             <form onSubmit={mensajeChat}>
-              <div className='row me-4'>
-                <div className='col'>
+              <div className='row mx-0'>
+                <div className='col ps-0 pe-1 justify-content-start align-items-center text-start '>
                   <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Escribe tu mensaje" required maxLength={144} />
                 </div>
-                <div className='col-4 justify-content-start align-items-center text-start p-0'>
+                <div style={{minWidth:'112px'}} className='col-3 justify-content-end align-items-center text-end p-0'>
                   <button type='submit' className='btn btn-primary btn-lg '> Enviar <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '2px' }} icon={faAngleRight} /> </button>
                 </div>
               </div>
