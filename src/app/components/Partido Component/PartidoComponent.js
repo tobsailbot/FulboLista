@@ -207,7 +207,7 @@ function PartidoComponent(props) {
     update(ref(database, `partido/${id}/chat`), {
       [msg_id]: {
         "message_id": msg_id,
-        "user_id": user_data.user_id,
+        "user_id": user_data.id,
         "sender_username": user_data.username,
         "color": user_data.color,
         "text": input_txt,
@@ -253,8 +253,27 @@ function PartidoComponent(props) {
     }).catch((error) => {
       //console.error('Error al escribir los datos: ', error);
     });
-    
   };
+
+
+const [isLoading, setIsLoading] = useState(false);
+const [errorMessage, setErrorMessage] = useState('');
+
+// input ID onChange
+const [idLength, setIdLength] = useState(0);
+const alphanumericPattern = /^[a-zA-Z0-9]+$/;
+
+const handleChangeEvent = (event) => {
+  setIdLength(event.target.value.length);
+  if (event.target.value.length > 0) {
+      if (alphanumericPattern.test(event.target.value)) {
+          setErrorMessage("");
+      }
+      else {
+          setErrorMessage("Hay caracteres que no están permitidos 🙃");
+      }
+  }
+}
 
 
   // si existe data con el id de la url
@@ -305,7 +324,7 @@ function PartidoComponent(props) {
                 <label className="col-4 fw-bold form-labels" htmlFor='lugar'>Lugar:</label>
                 <div className="col-7">
                   <input type="text" value={data.lugar} id='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required
-                    onChange={(e) => setFormData({ ...formData, lugar: e.target.value })} maxLength={32}/>
+                    onChange={(e) => setFormData({ ...formData, lugar: e.target.value })} maxLength={32} />
                 </div>
               </div>
               <div className="row align-items-center mt-2">
@@ -418,19 +437,19 @@ function PartidoComponent(props) {
           </div>
 
 
-        <div className='container bg-transparent shadow text-center mt-5 mb-5 pb-5 pt-3 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
-          <p className='text-white lh-base fw-bold pb-0 mb-0'>Campo de Juego</p>
-          <p className='text-white lh-base fs-5 mb-4'>Arrastra tu jugador a una posición <FontAwesomeIcon className="ms-1" style={{ position: 'relative' }} icon={faHandPointer} /></p>
-            <MovePlayers 
-              thisUser={user_data} 
-              users={data.usuarios} 
+          <div className='container bg-transparent shadow text-center mt-5 mb-5 pb-5 pt-3 fs-4 lh-lg' style={{ borderRadius: "20px 20px 20px 20px" }}>
+            <p className='text-white lh-base fw-bold pb-0 mb-0'>Campo de Juego</p>
+            <p className='text-white lh-base fs-5 mb-4'>Arrastra tu jugador a una posición <FontAwesomeIcon className="ms-1" style={{ position: 'relative' }} icon={faHandPointer} /></p>
+            <MovePlayers
+              thisUser={user_data}
+              users={data.usuarios}
               onPositionUpdate={handlePositionUpdate}
-              />
-          </div>  
+            />
+          </div>
 
           <div className='sub-container shadow mt-5 mb-5 pb-4 pt-3 ps-4 fs-4 lh-lg'
             style={{ borderRadius: "20px 20px 20px 20px" }}>
-            <span className='text-white'><FontAwesomeIcon className="me-1" style={{ position: 'relative', top:'1px' }} icon={faMessage} /> <b>Chat</b></span>
+            <span className='text-white'><FontAwesomeIcon className="me-1" style={{ position: 'relative', top: '1px' }} icon={faMessage} /> <b>Chat</b></span>
 
             <div className='border rounded me-4 overflow-auto bg-white mb-3 mt-3'>
               <ul ref={messagesRef} className='overflow-auto ps-3' style={{ height: '300px', maxWidth: '494px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
@@ -460,10 +479,7 @@ function PartidoComponent(props) {
                 </div>
               </div>
             </form>
-
           </div>
-
-
         </div>
 
       );
@@ -471,16 +487,30 @@ function PartidoComponent(props) {
     else if (!hasUserCookies) {
       return (
         <div>
-          <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'
+          <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 px-3 fs-4 lh-lg'
             style={{ borderRadius: "20px 20px 20px 20px", height: 'fit-content' }}>
             <form onSubmit={unirsePartido}>
-              <div className='row me-4'>
-                <div className='col-8'>
-                  <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Ingresa tu nombre" required />
-                </div>
-                <div className='col justify-content-center align-items-center m-auto text-center p-0'>
-                  <button type='submit' className='btn btn-primary border border-3 border-dark bold px-3'>Unirse <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} /> </button>
-                </div>
+
+              <div className="input-group mt-2">
+                  <input className="form-control border-2 fs-5 border-secondary" type='text' id='username' placeholder='Ingresa tu nombre' name='username' required onChange={handleChangeEvent} maxLength={15} />
+                  <div className="input-group-append">
+                      <span className="input-group-text h-100 border border-2 border-secondary rounded-0 rounded-end">{idLength}/15</span>
+                  </div>
+              </div>
+              <div className="ms-2 text-light">{errorMessage}</div>
+              <div className='mb-2 mt-2 pt-2 text-center'>
+                  <button type='submit' disabled={isLoading} className='btn btn-primary border border-3 border-dark btn-lg bold' style={{ minWidth: '190px', height: '52px' }}>
+                      {!isLoading
+                          ? (
+                              <div>
+                                  Unirse <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '1px' }} icon={faAngleRight} />
+                              </div>
+                          ) :
+                          <div className="spinner-border text-dark" role="status">
+                              <span className="sr-only">Loading...</span>
+                          </div>
+                      }
+                  </button>
               </div>
             </form>
           </div>
