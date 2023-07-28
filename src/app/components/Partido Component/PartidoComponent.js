@@ -459,7 +459,7 @@ const handleChangeEvent = (event) => {
             <span className='text-white'><FontAwesomeIcon className="me-1" style={{ position: 'relative', top: '1px' }} icon={faMessage} /> <b>Chat</b></span>
 
             <div className='border rounded  overflow-auto bg-white mb-3 mt-3'>
-              <ul ref={messagesRef} className='overflow-auto ps-3' style={{ height: '300px', maxWidth: '494px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
+              <ul ref={messagesRef} className='overflow-auto ps-3 mb-0' style={{ height: '320px', maxWidth: '500px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
                 <div className='text-black-50'>
                   {data.chat ? '' : 'No hay mensajes...'}
                 </div>
@@ -478,10 +478,10 @@ const handleChangeEvent = (event) => {
 
             <form onSubmit={mensajeChat}>
               <div className='row mx-0'>
-                <div className='col ps-0 pe-1 justify-content-start align-items-center text-start '>
+                <div className='col pb-0 ps-0 pe-1 justify-content-start align-items-center text-start '>
                   <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Escribe tu mensaje" required maxLength={144} />
                 </div>
-                <div style={{minWidth:'112px'}} className='col-3 justify-content-end align-items-center text-end p-0'>
+                <div style={{minWidth:'112px'}} className='col-3 d-flex justify-content-end align-items-center text-end p-0'>
                   <button type='submit' className='btn btn-primary btn-lg '> Enviar <FontAwesomeIcon className="ms-1" style={{ position: 'relative', top: '2px' }} icon={faAngleRight} /> </button>
                 </div>
               </div>
