@@ -287,9 +287,6 @@ const handleChangeEvent = (event) => {
 
           <div className='sub-container mt-5 text-white pt-2 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
             style={{ borderRadius: "20px 20px 0px 0px" }}>
-            {
-              //<h1 className='p-2 m-0'>⚽ PeloTurno</h1>
-            }
             <span>
               <b>ID:</b> &nbsp;
               <span className='text-light text-decoration-underline'>{data.id}</span> &nbsp;
